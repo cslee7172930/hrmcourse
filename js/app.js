@@ -39,6 +39,7 @@ class HRMApp {
 
     this.presentationContainer = document.getElementById("presentation-container");
     this.handoutContainer = document.getElementById("handout-container");
+    this.comingSoonContainer = document.getElementById("coming-soon-container");
     this.tabPresentation = document.getElementById("tab-presentation-view");
     this.tabHandout = document.getElementById("tab-handout-view");
 
@@ -260,13 +261,20 @@ class HRMApp {
     this.drawerUnitsList.innerHTML = "";
 
     COURSE_MODULES.forEach(module => {
+      const isAvailable = Boolean(module.htmlFile);
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = `drawer-unit-item ${module.id === this.currentUnitId ? "active" : ""}`;
+      btn.className = `drawer-unit-item ${module.id === this.currentUnitId ? "active" : ""} ${!isAvailable ? "drawer-unit-pending" : ""}`;
+      const statusHtml = !isAvailable ? `<span class="drawer-status-pill">準備中</span>` : "";
       btn.innerHTML = `
-        <span class="drawer-unit-badge">主題 ${module.unitNumber}</span>
-        <span class="drawer-unit-title">${module.title}</span>
-        <i class="fas fa-chevron-right drawer-unit-arrow"></i>
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 0;">
+          <span class="drawer-unit-badge">主題 ${module.unitNumber}</span>
+          <span class="drawer-unit-title" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${module.title}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.4rem;">
+          ${statusHtml}
+          <i class="fas fa-chevron-right drawer-unit-arrow"></i>
+        </div>
       `;
       btn.addEventListener("click", () => {
         this.selectUnit(module.id);
@@ -281,9 +289,12 @@ class HRMApp {
     if (!this.mobileUnitSelector) return;
     this.mobileUnitSelector.innerHTML = "";
     COURSE_MODULES.forEach(module => {
+      const isAvailable = Boolean(module.htmlFile);
       const opt = document.createElement("option");
       opt.value = module.id;
-      opt.textContent = `單元 ${module.unitNumber} ｜ ${module.title}`;
+      opt.textContent = isAvailable
+        ? `單元 ${module.unitNumber} ｜ ${module.title}`
+        : `單元 ${module.unitNumber} ｜ ${module.title} (準備中 Coming Soon)`;
       this.mobileUnitSelector.appendChild(opt);
     });
     this.mobileUnitSelector.value = this.currentUnitId;
@@ -320,13 +331,29 @@ class HRMApp {
 
     COURSE_MODULES.forEach((module, idx) => {
       const card = document.createElement("div");
-      card.className = "curriculum-card";
+      const isAvailable = Boolean(module.htmlFile);
+      card.className = `curriculum-card ${isAvailable ? "card-available" : "card-coming-soon"}`;
       card.dataset.unitId = module.id;
+
+      const badgeHtml = isAvailable
+        ? `<span class="card-topic-badge">主題 ${module.unitNumber}</span>`
+        : `<div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+             <span class="card-topic-badge">主題 ${module.unitNumber}</span>
+             <span class="badge-coming-soon"><i class="fas fa-clock"></i> 準備中 Coming Soon</span>
+           </div>`;
+
+      const btnHtml = isAvailable
+        ? `<button class="btn-open-deck">
+             <span>開啟課堂簡報</span> <i class="fas fa-arrow-right"></i>
+           </button>`
+        : `<button class="btn-open-deck btn-coming-soon" title="本單元教材規劃編修中">
+             <span>準備中 Coming Soon</span> <i class="fas fa-hourglass-half"></i>
+           </button>`;
 
       card.innerHTML = `
         <div>
           <div class="curriculum-card-meta">
-            <span class="card-topic-badge">主題 ${module.unitNumber}</span>
+            ${badgeHtml}
           </div>
           <div class="curriculum-card-body">
             <h3>${module.title}</h3>
@@ -335,9 +362,7 @@ class HRMApp {
           </div>
         </div>
         <div class="curriculum-card-footer">
-          <button class="btn-open-deck">
-            <span>開啟課堂簡報</span> <i class="fas fa-arrow-right"></i>
-          </button>
+          ${btnHtml}
         </div>
       `;
 
@@ -376,8 +401,9 @@ class HRMApp {
     }
 
     filtered.forEach(module => {
+      const isAvailable = Boolean(module.htmlFile);
       const li = document.createElement("li");
-      li.className = `dropdown-module-link ${module.id === this.currentUnitId ? "active" : ""}`;
+      li.className = `dropdown-module-link ${module.id === this.currentUnitId ? "active" : ""} ${!isAvailable ? "unit-is-pending" : ""}`;
       li.style.cursor = "pointer";
       li.dataset.unitId = module.id;
 
@@ -387,10 +413,15 @@ class HRMApp {
         li.style.fontWeight = "700";
       }
 
+      const statusTag = !isAvailable
+        ? `<span class="sidebar-unit-status">準備中</span>`
+        : "";
+
       li.innerHTML = `
         <span class="dropdown-unit-num">${module.unitNumber}</span>
-        <div style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          ${module.title}
+        <div style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;">
+          <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${module.title}</span>
+          ${statusTag}
         </div>
       `;
 
@@ -412,13 +443,29 @@ class HRMApp {
     const module = COURSE_MODULES.find(m => m.id === unitId);
     if (!module) return;
 
-    // 1. 載入原生簡報
-    if (window.presentation) {
-      window.presentation.loadUnit(unitId, 0);
-    }
+    const hasHtmlFile = Boolean(module.htmlFile);
 
-    // 2. 處理外部 HTML 簡報
-    if (module.htmlFile) {
+    if (!hasHtmlFile) {
+      // 尚未上傳對應主題 html：不顯示自行生成的課程內容，顯示「準備中 Coming Soon」
+      if (this.deckModeBar) this.deckModeBar.style.display = "none";
+      if (this.embeddedDeckContainer) this.embeddedDeckContainer.style.display = "none";
+      if (this.presentationContainer) this.presentationContainer.style.display = "none";
+      if (this.handoutContainer) this.handoutContainer.style.display = "none";
+      if (this.comingSoonContainer) {
+        this.comingSoonContainer.style.display = "flex";
+        this.renderComingSoon(module);
+      }
+    } else {
+      if (this.comingSoonContainer) {
+        this.comingSoonContainer.style.display = "none";
+      }
+
+      // 1. 載入原生簡報
+      if (window.presentation) {
+        window.presentation.loadUnit(unitId, 0);
+      }
+
+      // 2. 處理外部 HTML 簡報
       if (this.embeddedDeckTitle) {
         this.embeddedDeckTitle.textContent = `${module.title} 課堂簡報網頁`;
       }
@@ -431,12 +478,18 @@ class HRMApp {
       if (this.btnModeEmbedded) {
         this.btnModeEmbedded.style.display = "inline-flex";
       }
-      this.setDeckSubMode(this.deckSubMode);
-    } else {
-      if (this.btnModeEmbedded) {
-        this.btnModeEmbedded.style.display = "none";
+
+      if (this.viewMode === "presentation") {
+        if (this.deckModeBar) this.deckModeBar.style.display = "flex";
+        this.setDeckSubMode(this.deckSubMode);
+        if (this.handoutContainer) this.handoutContainer.style.display = "none";
+      } else {
+        if (this.deckModeBar) this.deckModeBar.style.display = "none";
+        if (this.embeddedDeckContainer) this.embeddedDeckContainer.style.display = "none";
+        if (this.presentationContainer) this.presentationContainer.style.display = "none";
+        if (this.handoutContainer) this.handoutContainer.style.display = "flex";
+        this.renderHandoutView(module);
       }
-      this.setDeckSubMode("interactive");
     }
 
     // 3. 更新側邊欄樣式與行動端選單狀態
@@ -456,11 +509,6 @@ class HRMApp {
 
     // 4. 更新麵包屑
     this.updateBreadcrumb(module);
-
-    // 5. 若處於講義模式，重新渲染講義
-    if (this.viewMode === "handout") {
-      this.renderHandoutView(module);
-    }
   }
 
   /**
@@ -499,25 +547,94 @@ class HRMApp {
    */
   switchViewMode(mode) {
     this.viewMode = mode;
+    const module = COURSE_MODULES.find(m => m.id === this.currentUnitId);
+    const hasHtmlFile = module && Boolean(module.htmlFile);
 
     if (mode === "presentation") {
-      if (this.deckModeBar) this.deckModeBar.style.display = "flex";
-      this.setDeckSubMode(this.deckSubMode);
-      if (this.handoutContainer) this.handoutContainer.style.display = "none";
       if (this.tabPresentation) this.tabPresentation.classList.add("active");
       if (this.tabHandout) this.tabHandout.classList.remove("active");
+
+      if (!hasHtmlFile) {
+        if (this.deckModeBar) this.deckModeBar.style.display = "none";
+        if (this.embeddedDeckContainer) this.embeddedDeckContainer.style.display = "none";
+        if (this.presentationContainer) this.presentationContainer.style.display = "none";
+        if (this.handoutContainer) this.handoutContainer.style.display = "none";
+        if (this.comingSoonContainer) {
+          this.comingSoonContainer.style.display = "flex";
+          if (module) this.renderComingSoon(module);
+        }
+      } else {
+        if (this.comingSoonContainer) this.comingSoonContainer.style.display = "none";
+        if (this.deckModeBar) this.deckModeBar.style.display = "flex";
+        this.setDeckSubMode(this.deckSubMode);
+        if (this.handoutContainer) this.handoutContainer.style.display = "none";
+      }
     } else {
+      if (this.tabPresentation) this.tabPresentation.classList.remove("active");
+      if (this.tabHandout) this.tabHandout.classList.add("active");
       if (this.deckModeBar) this.deckModeBar.style.display = "none";
       if (this.embeddedDeckContainer) this.embeddedDeckContainer.style.display = "none";
       if (this.presentationContainer) this.presentationContainer.style.display = "none";
-      if (this.handoutContainer) this.handoutContainer.style.display = "flex";
-      if (this.tabPresentation) this.tabPresentation.classList.remove("active");
-      if (this.tabHandout) this.tabHandout.classList.add("active");
 
-      const module = COURSE_MODULES.find(m => m.id === this.currentUnitId);
-      if (module) {
-        this.renderHandoutView(module);
+      if (!hasHtmlFile) {
+        if (this.handoutContainer) this.handoutContainer.style.display = "none";
+        if (this.comingSoonContainer) {
+          this.comingSoonContainer.style.display = "flex";
+          if (module) this.renderComingSoon(module);
+        }
+      } else {
+        if (this.comingSoonContainer) this.comingSoonContainer.style.display = "none";
+        if (this.handoutContainer) this.handoutContainer.style.display = "flex";
+        if (module) {
+          this.renderHandoutView(module);
+        }
       }
+    }
+  }
+
+  /**
+   * 渲染準備中 (Coming Soon) 頁面
+   */
+  renderComingSoon(module) {
+    if (!this.comingSoonContainer) return;
+    this.comingSoonContainer.innerHTML = `
+      <div class="coming-soon-card">
+        <div class="coming-soon-icon-wrap">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <div class="coming-soon-badge-pill">
+          <i class="fas fa-tools"></i> 課程內容規劃編修中 ｜ Coming Soon
+        </div>
+        <h2 class="coming-soon-title">單元 ${module.unitNumber} ｜ ${module.title}</h2>
+        <div class="coming-soon-en">${module.englishTitle}</div>
+        <p class="coming-soon-desc">${module.summary}</p>
+        <div class="coming-soon-notice">
+          <i class="fas fa-info-circle"></i>
+          <span>本單元之課堂簡報網頁與數位學習教材刻正由授課教師縝密規劃編修中，尚未正式上線。敬請先行研讀已開放之主題單元。</span>
+        </div>
+        <div class="coming-soon-actions">
+          <button class="btn-coming-action btn-back-to-portal" type="button">
+            <i class="fas fa-th-large"></i> 返回八大主題總覽
+          </button>
+          <button class="btn-coming-action btn-to-available-unit" type="button">
+            <i class="fas fa-book-open"></i> 研讀已開放主題 (單元 01)
+          </button>
+        </div>
+      </div>
+    `;
+
+    const backBtn = this.comingSoonContainer.querySelector(".btn-back-to-portal");
+    if (backBtn) {
+      backBtn.addEventListener("click", () => {
+        this.switchAppView("portal");
+      });
+    }
+
+    const availBtn = this.comingSoonContainer.querySelector(".btn-to-available-unit");
+    if (availBtn) {
+      availBtn.addEventListener("click", () => {
+        this.selectUnit("unit-1");
+      });
     }
   }
 
@@ -527,6 +644,11 @@ class HRMApp {
   renderHandoutView(module) {
     if (!this.handoutContainer) return;
     this.handoutContainer.innerHTML = "";
+
+    if (!module.htmlFile) {
+      this.renderComingSoon(module);
+      return;
+    }
 
     const header = document.createElement("div");
     header.className = "handout-summary-banner";
@@ -559,7 +681,7 @@ class HRMApp {
     `;
     this.handoutContainer.appendChild(header);
 
-    module.slides.forEach((slide, idx) => {
+    (module.slides || []).forEach((slide, idx) => {
       const slideCard = document.createElement("div");
       slideCard.className = "handout-slide-card";
       slideCard.style.border = "1px solid var(--border-classic)";
@@ -570,7 +692,7 @@ class HRMApp {
           <div class="slide-title-area">
             <div class="slide-meta-row">
               <span class="slide-badge">${slide.badge || "核心精華"}</span>
-              <span class="slide-unit-indicator">投影片 ${idx + 1} of ${module.slides.length}</span>
+              <span class="slide-unit-indicator">投影片 ${idx + 1} of ${(module.slides || []).length}</span>
             </div>
             <h3 class="slide-main-title">${slide.title}</h3>
             ${slide.subtitle ? `<p class="slide-sub-title">${slide.subtitle}</p>` : ""}

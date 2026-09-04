@@ -1251,6 +1251,245 @@ body.dark-mode .card-week-badge {
   box-shadow: var(--shadow-subtle);
 }
 
+/* -------------------------------------------------------------
+   準備中 (Coming Soon) 狀態樣式
+   ------------------------------------------------------------- */
+.badge-coming-soon {
+  font-family: var(--font-crest);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  background: rgba(197, 160, 89, 0.15);
+  color: #8a6a24;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+body.dark-mode .badge-coming-soon {
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--academy-gold);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.curriculum-card.card-coming-soon {
+  border-top: 3px solid rgba(197, 160, 89, 0.5);
+  background: var(--bg-surface);
+}
+
+.curriculum-card.card-coming-soon:hover {
+  border-top-color: var(--academy-gold);
+}
+
+.btn-open-deck.btn-coming-soon {
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+  border: 1px dashed var(--border-gold);
+  cursor: pointer;
+}
+
+.curriculum-card.card-coming-soon:hover .btn-coming-soon {
+  background: rgba(197, 160, 89, 0.12);
+  color: var(--text-primary);
+  border-color: var(--academy-gold);
+  box-shadow: var(--shadow-subtle);
+}
+
+.sidebar-unit-status, .drawer-status-pill {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.12rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: rgba(197, 160, 89, 0.15);
+  color: #8a6a24;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  white-space: nowrap;
+}
+
+body.dark-mode .sidebar-unit-status,
+body.dark-mode .drawer-status-pill {
+  color: var(--academy-gold);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.unit-is-pending, .drawer-unit-pending {
+  opacity: 0.88;
+}
+
+/* 演講廳 Coming Soon 專屬展示卡片 */
+.coming-soon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+  padding: 2.5rem 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-classic);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  animation: fadeIn 0.35s ease;
+}
+
+.coming-soon-card {
+  max-width: 660px;
+  width: 100%;
+  text-align: center;
+  padding: 2.8rem 2.2rem;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coming-soon-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(11, 26, 48, 0.08), rgba(197, 160, 89, 0.2));
+  border: 2px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--academy-navy);
+  margin-bottom: 1.25rem;
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+
+body.dark-mode .coming-soon-icon-wrap {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(212, 175, 55, 0.18));
+  color: var(--academy-gold);
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.85; }
+}
+
+.coming-soon-badge-pill {
+  font-family: var(--font-crest);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.95rem;
+  background: rgba(197, 160, 89, 0.15);
+  border: 1px solid rgba(197, 160, 89, 0.45);
+  border-radius: 9999px;
+  color: #8a6a24;
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+body.dark-mode .coming-soon-badge-pill {
+  color: var(--academy-gold);
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+.coming-soon-title {
+  font-family: var(--font-serif-tc);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  line-height: 1.35;
+}
+
+.coming-soon-en {
+  font-family: var(--font-serif-en);
+  font-size: 1rem;
+  color: var(--text-gold);
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+.coming-soon-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  max-width: 540px;
+}
+
+.coming-soon-notice {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-classic);
+  border-left: 4px solid var(--academy-gold);
+  padding: 0.95rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1.8rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.coming-soon-notice i {
+  color: var(--academy-gold);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.coming-soon-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-coming-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-academic);
+  border: 1px solid transparent;
+}
+
+.btn-back-to-portal {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-classic);
+}
+
+.btn-back-to-portal:hover {
+  background: var(--border-classic);
+}
+
+.btn-to-available-unit {
+  background: var(--academy-navy);
+  color: #ffffff;
+  border-color: var(--border-gold);
+}
+
+.btn-to-available-unit:hover {
+  background: var(--academy-crimson);
+}
+
+body.dark-mode .btn-to-available-unit {
+  background: var(--academy-gold);
+  color: var(--academy-navy);
+}
+
+body.dark-mode .btn-to-available-unit:hover {
+  background: #e6c875;
+}
+
 /* 教學評量與評分機制 (Assessment & Grading) */
 .grading-grid {
   display: grid;

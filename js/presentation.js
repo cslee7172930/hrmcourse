@@ -151,6 +151,15 @@ class SlidePresentation {
     if (!module) return;
 
     this.currentUnit = module;
+    if (!module.slides || module.slides.length === 0) {
+      this.currentSlideIndex = 0;
+      if (this.slidePicker) this.slidePicker.innerHTML = "";
+      if (window.app) {
+        window.app.updateBreadcrumb(module);
+      }
+      return;
+    }
+
     this.currentSlideIndex = Math.max(0, Math.min(slideIndex, module.slides.length - 1));
 
     // 更新下拉選單
