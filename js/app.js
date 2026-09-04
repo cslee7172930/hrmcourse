@@ -478,6 +478,13 @@ class HRMApp {
       if (this.btnModeEmbedded) {
         this.btnModeEmbedded.style.display = "inline-flex";
       }
+      if (this.btnModeInteractive) {
+        this.btnModeInteractive.style.display = (module.slides && module.slides.length > 0) ? "inline-flex" : "none";
+      }
+
+      if (!module.slides || module.slides.length === 0) {
+        this.deckSubMode = "embedded";
+      }
 
       if (this.viewMode === "presentation") {
         if (this.deckModeBar) this.deckModeBar.style.display = "flex";
@@ -566,7 +573,11 @@ class HRMApp {
       } else {
         if (this.comingSoonContainer) this.comingSoonContainer.style.display = "none";
         if (this.deckModeBar) this.deckModeBar.style.display = "flex";
-        this.setDeckSubMode(this.deckSubMode);
+        if (!module.slides || module.slides.length === 0) {
+          this.setDeckSubMode("embedded");
+        } else {
+          this.setDeckSubMode(this.deckSubMode);
+        }
         if (this.handoutContainer) this.handoutContainer.style.display = "none";
       }
     } else {
@@ -680,6 +691,27 @@ class HRMApp {
       </div>
     `;
     this.handoutContainer.appendChild(header);
+
+    if (!module.slides || module.slides.length === 0) {
+      const placeholder = document.createElement("div");
+      placeholder.style.textAlign = "center";
+      placeholder.style.padding = "3rem 1.5rem";
+      placeholder.style.background = "var(--bg-surface)";
+      placeholder.style.borderRadius = "var(--radius-md)";
+      placeholder.style.border = "1px solid var(--border-classic)";
+      placeholder.innerHTML = `
+        <i class="fas fa-file-powerpoint" style="font-size: 2.5rem; color: var(--academy-gold); margin-bottom: 1rem; display: block;"></i>
+        <h3 style="font-family: var(--font-serif-tc); font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-primary);">本單元提供完整 HTML 課堂簡報網頁</h3>
+        <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 1.5rem; font-size: 0.9rem;">
+          請切換至「互動簡報模式」直接於頁面內閱讀完整課堂簡報，或點擊下方按鈕以獨立新視窗開啟研讀。
+        </p>
+        <a href="${module.htmlFile}" target="_blank" class="ctrl-btn btn-primary" style="display: inline-flex; text-decoration: none; padding: 0.6rem 1.4rem; font-weight: 700;">
+          <i class="fas fa-external-link-alt"></i> 開啟《${module.title}》完整課堂簡報
+        </a>
+      `;
+      this.handoutContainer.appendChild(placeholder);
+      return;
+    }
 
     (module.slides || []).forEach((slide, idx) => {
       const slideCard = document.createElement("div");

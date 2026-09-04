@@ -1082,6 +1082,7 @@ const COURSE_MODULES = [
     title: "訓練與發展",
     englishTitle: "Training & Development",
     icon: "fa-graduation-cap",
+    htmlFile: "訓練與發展2026Fall.html",
     summary: "掌握 ADDIE 系統化教學設計模型、70-20-10 成人學習法則、柯氏四層級訓練評估 (ROI)，以及雙軌制職涯階梯與接班人計畫 (Succession Planning)。",
     tags: ["ADDIE模型", "柯氏四級評估", "70-20-10法則", "雙軌制職涯", "接班人計畫"],
     slides: []
