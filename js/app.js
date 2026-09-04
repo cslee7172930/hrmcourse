@@ -734,6 +734,25 @@ class HRMApp {
       }
     });
 
+    // 支援外部嵌入簡報模式下的 PgUp / PgDn 快速翻頁
+    window.addEventListener("keydown", (e) => {
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName)) return;
+      if (this.currentView === "lecture" && this.deckSubMode === "embedded" && this.embeddedIframe) {
+        try {
+          const iwin = this.embeddedIframe.contentWindow;
+          if (iwin) {
+            if (e.key === "PageDown" || e.key === "PgDn" || e.code === "PageDown" || e.keyCode === 34) {
+              e.preventDefault();
+              iwin.scrollBy({ top: iwin.innerHeight * 0.9, behavior: "smooth" });
+            } else if (e.key === "PageUp" || e.key === "PgUp" || e.code === "PageUp" || e.keyCode === 33) {
+              e.preventDefault();
+              iwin.scrollBy({ top: -iwin.innerHeight * 0.9, behavior: "smooth" });
+            }
+          }
+        } catch (err) {}
+      }
+    });
+
     // 10. 行動版側邊滑動抽屜事件監聽
     if (this.mobileToggleBtn) {
       this.mobileToggleBtn.addEventListener("click", () => this.openMobileDrawer());

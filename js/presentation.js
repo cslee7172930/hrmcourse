@@ -59,21 +59,34 @@ class SlidePresentation {
       // 避免在搜尋框輸入時觸發簡報快捷鍵
       if (["INPUT", "TEXTAREA", "SELECT"].includes(e.target.tagName)) return;
 
+      // 下一頁快捷鍵: →, Space, PageDown, PgDn (含簡報筆常見鍵值)
+      if (
+        e.key === "ArrowRight" ||
+        e.key === "PageDown" ||
+        e.key === "PgDn" ||
+        e.code === "PageDown" ||
+        e.keyCode === 34 ||
+        e.key === " "
+      ) {
+        e.preventDefault();
+        this.nextSlide();
+        return;
+      }
+
+      // 上一頁快捷鍵: ←, PageUp, PgUp (含簡報筆常見鍵值)
+      if (
+        e.key === "ArrowLeft" ||
+        e.key === "PageUp" ||
+        e.key === "PgUp" ||
+        e.code === "PageUp" ||
+        e.keyCode === 33
+      ) {
+        e.preventDefault();
+        this.prevSlide();
+        return;
+      }
+
       switch (e.key) {
-        case "ArrowRight":
-        case "PageDown":
-          e.preventDefault();
-          this.nextSlide();
-          break;
-        case "ArrowLeft":
-        case "PageUp":
-          e.preventDefault();
-          this.prevSlide();
-          break;
-        case " ": // 空白鍵
-          e.preventDefault();
-          this.nextSlide();
-          break;
         case "f":
         case "F":
           e.preventDefault();
