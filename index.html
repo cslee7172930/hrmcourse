@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國立高雄師範大學 人力與知識管理研究所 ｜ 人力資源管理課程 Human Resource Management</title>
+  
+  <!-- 所徽 Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
+  
+  <!-- FontAwesome 6 圖示庫 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- 學院風核心樣式表 -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/presentation.css">
+</head>
+<body>
+  <!-- 1. 頂部校級輔助條 (Top Utility Bar) -->
+  <div class="top-utility-bar">
+    <div class="top-bar-left">
+      <span class="course-code-tag">NKNU HRKM</span>
+      <span class="term-tag"><i class="far fa-calendar-alt"></i> 2026 Fall Semester</span>
+      <span class="top-hide-mobile">｜ 國立高雄師範大學 人力與知識管理研究所</span>
+      <span class="online-only-tag"><i class="fas fa-globe-americas"></i> 線上專屬研讀</span>
+    </div>
+    <div class="top-bar-right">
+      <span id="device-mode-badge" class="device-indicator-tag" title="載具自適應偵測中">
+        <i class="fas fa-desktop"></i> <span id="device-mode-text">電腦版設計</span>
+      </span>
+      <button id="theme-toggle-btn" class="utility-link" title="切換深淺色外觀" aria-label="切換深淺色外觀">
+        <i class="fas fa-moon"></i> <span>外觀風格</span>
+      </button>
+      <button id="btn-open-shortcuts" class="utility-link" title="按此開啟簡報鍵盤快捷鍵指南">
+        <i class="fas fa-keyboard"></i> <span>簡報鍵盤快捷鍵指南</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 2. 學院官方導航列 (Academy Main Header & Menu) -->
+  <header class="academy-header">
+    <div class="header-inner">
+      <!-- 系所所徽與學院抬頭 (以指定 Logo 取代黑圈) -->
+      <div class="academy-brand" id="brand-home-link" title="返回課程主頁">
+        <div class="brand-logo-wrapper">
+          <img src="images/logo.png" alt="國立高雄師範大學 人力與知識管理研究所 所徽" class="brand-logo-img">
+        </div>
+        <div class="brand-text-col">
+          <span class="institution-title">國立高雄師範大學 ｜ 人力與知識管理研究所</span>
+          <h1 class="course-main-title">人力資源管理課程</h1>
+          <span class="course-en-title">HUMAN RESOURCE MANAGEMENT</span>
+        </div>
+      </div>
+
+      <!-- 桌面版主選單導航 (移除評量機制、授課教師、指定教材) -->
+      <nav class="academy-nav">
+        <div class="nav-item">
+          <a href="javascript:void(0)" class="nav-link active" id="menu-home-link">
+            <i class="fas fa-landmark"></i> 課程主頁
+          </a>
+        </div>
+
+        <!-- 下拉式課程主題選單 (8 大主題依序) -->
+        <div class="nav-item">
+          <div class="nav-link" id="menu-dropdown-trigger">
+            <i class="fas fa-chalkboard-teacher"></i> 課程主題選單 <i class="fas fa-chevron-down arrow-icon"></i>
+          </div>
+          <div class="nav-dropdown" id="nav-dropdown-menu">
+            <div class="dropdown-header-label">8 大主題核心課程簡報</div>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-1">
+              <span class="dropdown-unit-num">01</span> 人力資源管理概述
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-2">
+              <span class="dropdown-unit-num">02</span> 組織行為與職場心理學概述
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-3">
+              <span class="dropdown-unit-num">03</span> 人力資源規劃與工作分析
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-4">
+              <span class="dropdown-unit-num">04</span> 招募與甄選
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-5">
+              <span class="dropdown-unit-num">05</span> 績效評估與管理
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-6">
+              <span class="dropdown-unit-num">06</span> 訓練與發展
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-7">
+              <span class="dropdown-unit-num">07</span> 薪酬管理
+            </a>
+            <a href="javascript:void(0)" class="dropdown-module-link" data-unit="unit-8">
+              <span class="dropdown-unit-num">08</span> 國際人力資源管理
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#section-curriculum" class="nav-link" id="menu-curriculum-link">
+            <i class="fas fa-th-large"></i> 課程主題
+          </a>
+        </div>
+
+        <!-- 進入簡報演講廳按鈕 -->
+        <button id="btn-enter-lecture-hall" class="nav-cta-btn">
+          <i class="fas fa-play-circle"></i> 進入簡報講堂
+        </button>
+      </nav>
+
+      <!-- 行動版漢堡按鈕 -->
+      <button class="mobile-menu-toggle" id="mobile-toggle-btn" title="切換選單">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       VIEW 1: 大學課程首頁門戶 (Academic Home Portal)
+       ========================================================================== -->
+  <div id="portal-view" class="portal-view">
+    <!-- 典雅主視覺橫幅 (Hero Banner) -->
+    <section class="academic-hero">
+      <div class="hero-inner">
+        <div class="hero-crest-badge">
+          <img src="images/logo.png" alt="高師大人知所所徽" class="hero-logo-icon"> 國立高雄師範大學 ｜ 人力與知識管理研究所
+        </div>
+        <h2 class="hero-main-title">人力資源管理課程</h2>
+        <p class="hero-en-title">Human Resource Management</p>
+        
+        <div class="hero-divider">
+          <span class="line"></span>
+          <i class="fas fa-feather-alt"></i>
+          <span class="line"></span>
+        </div>
+
+        <!-- 學術核心數據指標 -->
+        <div class="hero-stats-row">
+          <div class="stat-box">
+            <span class="num">08</span>
+            <span class="label">核心主題單元 (Modules)</span>
+          </div>
+          <div class="stat-box">
+            <span class="num">100%</span>
+            <span class="label">全單元 HTML 課堂簡報</span>
+          </div>
+          <div class="stat-box">
+            <span class="num">線上</span>
+            <span class="label">100% 線上專屬研讀</span>
+          </div>
+        </div>
+
+        <!-- 快速行動按鈕列 (無列印按鈕，專注線上即時研讀) -->
+        <div class="hero-actions-row">
+          <button id="btn-hero-launch" class="btn-academy-primary">
+            <i class="fas fa-desktop"></i> 開始瀏覽線上簡報
+          </button>
+          <a href="#section-curriculum" class="btn-academy-secondary">
+            <i class="fas fa-th-large"></i> 檢閱 8 大課程主題
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 首頁主體區塊：八大課程主題與簡報入口 -->
+    <main class="portal-main-container" style="gap: 2rem;">
+      <section id="section-curriculum" class="curriculum-section">
+        <div class="academic-section-header">
+          <span class="section-latin-label">CORE COURSE TOPICS & LECTURE MODULES</span>
+          <h2 class="academic-section-title">八大課程主題與簡報入口</h2>
+          <p class="academic-section-desc">學生可直接點選任一主題卡片之「開啟課堂簡報」，或透過頂部選單切換至對應主題之教學簡報</p>
+        </div>
+
+        <div class="curriculum-grid" id="curriculum-cards-container">
+          <!-- 由 app.js 動態渲染 8 大單元卡片 -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       VIEW 2: 簡報演講廳 (Lecture Hall View - 預設隱藏，點選後展開)
+       ========================================================================== -->
+  <div id="lecture-hall-view" class="lecture-hall-view hidden-view">
+    <!-- 頂部返回主頁與麵包屑 -->
+    <div class="lecture-hall-top-nav">
+      <button id="btn-back-home" class="btn-back-portal">
+        <i class="fas fa-arrow-left"></i> 返回課程首頁 (Return to Home Portal)
+      </button>
+
+      <div class="current-unit-breadcrumb">
+        <span class="unit-tag" id="active-unit-badge">單元 01</span>
+        <span class="separator"><i class="fas fa-chevron-right"></i></span>
+        <span class="active-title" id="active-unit-title">人力資源管理概述</span>
+      </div>
+
+      <div class="view-mode-tabs">
+        <button id="tab-presentation-view" class="view-tab-btn active" title="投影片播放模式">
+          <i class="fas fa-play-circle"></i> 互動簡報模式
+        </button>
+        <button id="tab-handout-view" class="view-tab-btn" title="線上長條講義模式 (線上即時研讀)">
+          <i class="fas fa-file-alt"></i> 線上講義閱讀
+        </button>
+      </div>
+    </div>
+
+    <!-- 行動版/平板專屬主題快速切換列 (Mobile/Tablet Quick Switcher) -->
+    <div class="lecture-mobile-unit-bar" id="lecture-mobile-unit-bar">
+      <div class="mobile-unit-bar-inner">
+        <label for="mobile-unit-selector"><i class="fas fa-book-reader"></i> 快速切換主題：</label>
+        <select id="mobile-unit-selector" class="mobile-unit-select" aria-label="切換課程主題">
+          <!-- 由 app.js 動態填入 8 大主題 -->
+        </select>
+      </div>
+    </div>
+
+    <div class="lecture-hall-container">
+      <!-- 演講廳左側單元目錄 -->
+      <aside class="lecture-sidebar">
+        <h4>
+          <span><i class="fas fa-book"></i> 八大主題目錄</span>
+          <span style="font-size: 0.72rem; color: var(--text-gold); font-family: var(--font-crest);">8 MODULES</span>
+        </h4>
+        <div class="search-input-wrapper" style="margin-bottom: 0.75rem;">
+          <input type="text" id="search-units-input" class="search-input" placeholder="搜尋主題關鍵字..." aria-label="搜尋單元">
+        </div>
+        <ul id="sidebar-unit-list" class="lecture-unit-list">
+          <!-- 由 app.js 動態渲染 -->
+        </ul>
+      </aside>
+
+      <!-- 演講廳主畫面 (簡報播放器 / 內嵌 HTML / 講義) -->
+      <main class="lecture-content-main">
+        <!-- 簡報子模式切換列 (課堂完整 HTML 簡報 vs 重點導讀簡報) -->
+        <div id="deck-mode-bar" class="deck-mode-bar">
+          <div class="deck-mode-tabs">
+            <button id="btn-mode-embedded" class="deck-tab-btn active" title="載入課堂完整 HTML 簡報">
+              <i class="fas fa-desktop"></i> 課堂完整 HTML 簡報
+            </button>
+            <button id="btn-mode-interactive" class="deck-tab-btn" title="查看重點導讀與隨堂互動測驗">
+              <i class="fas fa-chalkboard-teacher"></i> 重點導讀與隨堂測驗
+            </button>
+          </div>
+          <button id="btn-deck-shortcuts" class="deck-shortcuts-btn" title="按此開啟簡報鍵盤快捷鍵指南">
+            <i class="fas fa-keyboard"></i> <span>簡報鍵盤快捷鍵指南</span>
+          </button>
+        </div>
+
+        <!-- 1. 內嵌完整 HTML 課程簡報檢視器 -->
+        <div id="embedded-deck-container" class="embedded-deck-container">
+          <div class="embedded-deck-bar">
+            <div class="embedded-deck-info">
+              <span class="embedded-badge"><i class="fas fa-file-powerpoint"></i> HTML 簡報</span>
+              <span id="embedded-deck-title">人力資源管理概述 課堂簡報網頁</span>
+            </div>
+            <div class="embedded-deck-actions">
+              <a id="btn-open-new-tab" href="#" target="_blank" class="ctrl-btn" title="在新視窗獨立開啟此簡報">
+                <i class="fas fa-external-link-alt"></i>
+                <span>新分頁開啟</span>
+              </a>
+              <button id="btn-embedded-fullscreen" class="ctrl-btn btn-primary" title="視窗全螢幕播放">
+                <i class="fas fa-expand"></i>
+                <span>全螢幕</span>
+              </button>
+            </div>
+          </div>
+          <div class="embedded-iframe-wrap">
+            <iframe id="embedded-iframe" class="embedded-deck-iframe" src="" title="課程簡報播放器" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- 2. 原生重點導讀簡報播放器 -->
+        <div id="presentation-container" class="presentation-container" style="display: none;">
+          <!-- 頂部進度條 -->
+          <div class="slide-progress-track">
+            <div id="slide-progress-bar" class="slide-progress-bar"></div>
+          </div>
+
+          <!-- 投影片視窗舞台 -->
+          <div id="slide-viewport" class="slide-viewport">
+            <div class="slide-header">
+              <div class="slide-title-area">
+                <div class="slide-meta-row">
+                  <span id="slide-badge" class="slide-badge">重點精華</span>
+                  <span id="slide-unit-indicator" class="slide-unit-indicator">單元 01 ｜ 人力資源管理概述</span>
+                </div>
+                <h2 id="slide-main-title" class="slide-main-title">載入中...</h2>
+                <p id="slide-sub-title" class="slide-sub-title"></p>
+              </div>
+              <div id="slide-page-indicator" class="slide-page-indicator">1 / 6</div>
+            </div>
+
+            <!-- 投影片動態內容 -->
+            <div id="slide-content-body" class="slide-content-body">
+              <!-- 由 presentation.js 動態注入內容 -->
+            </div>
+          </div>
+
+          <!-- 講師講義備忘錄 (可展開收合) -->
+          <div id="speaker-notes-drawer" class="speaker-notes-drawer">
+            <div class="notes-header">
+              <i class="fas fa-lightbulb"></i>
+              <span>重點備忘錄 / 學習補充指引：</span>
+            </div>
+            <div id="speaker-notes-content" class="notes-body">
+              尚無補充筆記。
+            </div>
+          </div>
+
+          <!-- 底部控制條 -->
+          <div class="slide-controls-bar">
+            <div class="controls-left">
+              <select id="slide-picker-select" class="slide-picker-select" aria-label="跳至指定投影片">
+                <!-- 動態注入選項 -->
+              </select>
+              <button id="btn-toggle-notes" class="ctrl-btn" title="查看補充備忘錄 (按 N)">
+                <i class="far fa-sticky-note"></i>
+                <span class="ctrl-text">學習講義</span>
+              </button>
+            </div>
+
+            <div class="controls-center">
+              <button id="btn-prev-slide" class="ctrl-btn" title="上一頁 (← / PageUp)">
+                <i class="fas fa-chevron-left"></i>
+                <span class="ctrl-text">上一頁</span>
+              </button>
+              <button id="btn-next-slide" class="ctrl-btn btn-primary" title="下一頁 (→ / 空白鍵)">
+                <span class="ctrl-text">下一頁</span>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="controls-right">
+              <button id="btn-slide-shortcuts" class="ctrl-btn" title="簡報鍵盤快捷鍵指南 (按此開啟)">
+                <i class="fas fa-keyboard"></i>
+                <span class="ctrl-text">快捷鍵指南</span>
+              </button>
+              <button id="btn-toggle-fullscreen" class="ctrl-btn" title="全螢幕展示 (按 F)">
+                <i class="fas fa-expand"></i>
+                <span class="ctrl-text">全螢幕</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 講義長條檢視模式容器 -->
+        <div id="handout-container" class="handout-mode-container" style="display: none;">
+          <!-- 由 app.js 動態渲染所有頁面 -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- 快捷鍵指南 Modal -->
+  <div id="shortcuts-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-keyboard"></i> 簡報鍵盤快捷鍵指南</h3>
+        <button id="btn-close-shortcuts" class="close-modal-btn" aria-label="關閉對話框">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <table class="shortcuts-table">
+        <tbody>
+          <tr>
+            <td><span class="key-badge">→</span> 或 <span class="key-badge">Space</span></td>
+            <td>切換至<strong>下一頁</strong>投影片</td>
+          </tr>
+          <tr>
+            <td><span class="key-badge">←</span></td>
+            <td>返回至<strong>上一頁</strong>投影片</td>
+          </tr>
+          <tr>
+            <td><span class="key-badge">F</span></td>
+            <td>進入 / 退出<strong>全螢幕播放模式</strong></td>
+          </tr>
+          <tr>
+            <td><span class="key-badge">N</span></td>
+            <td>展開 / 收合<strong>補充備忘錄與筆記</strong></td>
+          </tr>
+          <tr>
+            <td><span class="key-badge">Home / End</span></td>
+            <td>跳至該單元<strong>第一頁 / 最後一頁</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 學院官方頁尾 (Academic Official Footer) -->
+  <footer class="academy-footer">
+    <div class="footer-bottom">
+      <span>&copy; 2026 Chun-Hsien Lee All rights reserved.</span>
+      <span class="footer-academic-disclosure">
+        <i class="fas fa-robot" style="color: var(--academy-gold); margin-right: 4px;"></i>
+        本教材由教師主導規劃，協同生成式 AI 輔助編修 ｜ Assisted by Generative AI for instructional purposes
+      </span>
+    </div>
+  </footer>
+
+  <!-- 3. 行動版/平板側邊滑動導覽抽屜 (Mobile Off-Canvas Drawer) -->
+  <div id="mobile-drawer-overlay" class="mobile-drawer-overlay"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+    <div class="mobile-drawer-header">
+      <div class="drawer-title">
+        <img src="images/logo.png" alt="所徽" class="drawer-logo-img">
+        <span>人力資源管理課程</span>
+      </div>
+      <button id="btn-close-drawer" class="btn-close-drawer" aria-label="關閉選單">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="mobile-drawer-body">
+      <div class="drawer-device-badge">
+        <i class="fas fa-mobile-alt"></i> 目前載具模式：<strong id="drawer-device-name">行動版介面</strong>
+      </div>
+      <div class="drawer-nav-group">
+        <div class="drawer-group-label">導覽頁面</div>
+        <a href="javascript:void(0)" class="drawer-nav-link active" id="drawer-home-link">
+          <i class="fas fa-landmark"></i> 課程首頁 (Home Portal)
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-link" id="drawer-lecture-link">
+          <i class="fas fa-chalkboard-teacher"></i> 進入簡報演講廳 (Lecture Hall)
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-link" id="btn-drawer-shortcuts">
+          <i class="fas fa-keyboard"></i> 簡報鍵盤快捷鍵指南
+        </a>
+      </div>
+
+      <div class="drawer-nav-group">
+        <div class="drawer-group-label">8 大主題核心課程簡報</div>
+        <div class="drawer-units-list" id="drawer-units-list">
+          <!-- 由 app.js 動態渲染 8 大單元連結 -->
+        </div>
+      </div>
+
+      <div class="drawer-online-notice">
+        <i class="fas fa-lock"></i> 本課程全部內容僅供線上即時瀏覽研讀，不提供列印與另存 PDF 功能。
+      </div>
+    </div>
+  </aside>
+
+  <!-- 4. 線上瀏覽聲明與提示 Toast -->
+  <div id="academy-toast" class="academy-toast" role="alert" aria-live="polite">
+    <div class="toast-content">
+      <i class="fas fa-shield-alt toast-icon"></i>
+      <span id="toast-message" class="toast-message">本課程全部內容僅供線上即時瀏覽研讀</span>
+    </div>
+  </div>
+
+  <!-- 核心腳本 -->
+  <script src="js/course-data.js"></script>
+  <script src="js/presentation.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
